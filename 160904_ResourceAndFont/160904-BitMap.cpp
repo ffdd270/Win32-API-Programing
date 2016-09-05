@@ -183,7 +183,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		BITMAP_DRAW(hdc,MyBitMap);
-		hFont = MakeFont(15, 10, HANGEUL_CHARSET, TEXT("나눔고딕")); //폰트 설정.
+		hFont = MakeFont(15, 10, HANGEUL_CHARSET, TEXT("나눔바른고딕")); //폰트 설정.
 		//이 4개 인수빼곤 별볼일 없다.
 		OldFont = (HFONT)SelectObject(hdc, hFont);
 		TEXT_PRINT(hdc, TodayCharter, WhatSay); //문자열 출력을 함수로 묶어놈.
