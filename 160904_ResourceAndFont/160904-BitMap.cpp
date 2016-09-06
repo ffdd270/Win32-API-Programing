@@ -52,7 +52,7 @@ void MyTextOut(HDC hdc, int x, int y, LPCSTR str)
 	TextOut(hdc, x, y, str, lstrlen(str));
 }
 
-void TEXT_PRINT(HDC hdc, int WHOIS, int WhatSay)
+void CHRITER_SAY(HDC hdc, int WHOIS, int WhatSay)
 {
 	switch (WHOIS)
 	{
@@ -159,7 +159,6 @@ int BITMAP_DRAW(HDC hdc, HBITMAP MyBitMap)
 
 	SelectObject(Memdc,OldBitMap);
 	DeleteDC(Memdc);
-
 	return 0;
 }
 
@@ -186,7 +185,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		hFont = MakeFont(15, 10, HANGEUL_CHARSET, TEXT("나눔바른고딕")); //폰트 설정.
 		//이 4개 인수빼곤 별볼일 없다.
 		OldFont = (HFONT)SelectObject(hdc, hFont);
-		TEXT_PRINT(hdc, TodayCharter, WhatSay); //문자열 출력을 함수로 묶어놈.
+		CHRITER_SAY(hdc, TodayCharter, WhatSay); //문자열 출력을 함수로 묶어놈.
 		SelectObject(hdc, OldFont);
 		DeleteObject(hFont);
 		EndPaint(hWnd, &ps);
