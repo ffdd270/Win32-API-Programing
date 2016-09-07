@@ -89,20 +89,26 @@ void Update(UINT Whochar, int x, int y)
 {
 	Graphics G(hWndMain);
 	RECT crt;
-	Image * pImage = NULL;
+	static Image * pImage = NULL;
+	static int OldChar = -1;
 	GetClientRect(hWndMain, &crt);
+	Bitmap *pBit = new Bitmap(crt.right, crt.bottom, &G);
+	Graphics *memG = new Graphics(pBit);
 
-	if (pCbit != NULL)
+	memG->FillRectangle(&SolidBrush(Color(255, 255, 255)), 0, 0, crt.right, crt.bottom);
+
+	if (pCbit != NULL) //메모리 누수의 원인. 계속 딜리트를  시켜야한다.
 	{
 		delete pCbit;
 	}
 
-	Bitmap *pBit = new Bitmap(crt.right, crt.bottom, &G);
-	Graphics *memG = new Graphics(pBit);
-	memG->FillRectangle(&SolidBrush(Color(255, 255, 255)), 0, 0, crt.right, crt.bottom);
-
 	//리소스 로드.
-	LoadResoucePNG(Whochar, &pImage);
+	if (OldChar != Whochar)
+	{
+		delete pImage;
+		LoadResoucePNG(Whochar, &pImage);
+	}
+
 	//로드 끝.
 
 	if (pImage->GetLastStatus() != Ok)
@@ -116,7 +122,8 @@ void Update(UINT Whochar, int x, int y)
 
 	pCbit = new CachedBitmap(pBit, &G);
 
-	delete pImage;
+	OldChar = Whochar;
+
 	delete pBit;
 	delete memG;
 
