@@ -19,6 +19,10 @@ extern HWND hWndMain;
 extern CachedBitmap *pCbit;
 extern int WhatSay;
 
+//Grapic Ext Value
+extern int EndX;
+extern int EndY;
+
 //Funtion
 
 //Stading_CG
@@ -27,5 +31,4 @@ extern int WhatSay;
 void OnPaint(HDC hdc, int x, int y);
 void Update(UINT Whochar, int x, int y); 
 void LoadResoucePNG(UINT num, Image ** pimg);
-
 #endif

@@ -77,7 +77,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	HDC hdc;
 	PAINTSTRUCT ps;
 	static int x = 100, y = 100;
+	static int MouseX, MouseY;				
+	int MidX, MidY;
+	int MovementX, MovementY;
 	static int i = 6;
+	static bool IsItHold = false;
+
 	hWndMain = hWnd;
 	switch (iMessage)
 	{
@@ -89,20 +94,59 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		OnPaint(hdc, x, y);
 		EndPaint(hWnd, &ps);
 		return 0;
+	case WM_MOUSEMOVE:
+		if (IsItHold)
+		{
+			MovementX = LOWORD(lParam); MovementY = HIWORD(lParam);
+			if (MovementX > x && MovementY > y && MovementX < EndX && MovementY < EndY)
+			{
+				MovementX = MovementX - MouseX; 
+				MovementY = MovementY - MouseY;
+				MidX = ((x + EndX) / 2); 
+				MidY = ((y + EndY) / 2);
+				MidX += MovementX; 
+				MidY += MovementY;
+				x = (MidX * 2) - EndX; y = (MidY * 2) - EndY;
+				Update(WhatSay, x, y);
+			}
+		}
+		return 0;
+	case WM_LBUTTONUP:
+		IsItHold = false;
+		return 0;
+	case WM_CHAR:
+		switch ((TCHAR)wParam)
+		{
+		case 'n':
+			if (WhatSay < WhatToSay::GoodMoring)
+			{
+				WhatSay++;
+				Update(WhatSay, x, y);
+			}
+			else
+			{
+				WhatSay = WhatToSay::Hello_World;
+				Update(WhatSay, x, y);
+			}
+			return 0;
+		case 'b':
+			if (WhatSay > 0)
+			{
+				WhatSay--;
+				Update(WhatSay, x, y);
+			}
+			else
+			{
+				Update(WhatSay, x, y);
+			}
+			return 0;
+		default:
+			break;
+		}
 	case WM_LBUTTONDOWN:
-		if (WhatSay < WhatToSay::GoodMoring)
-		{
-			x += 10;
-			WhatSay++;
-			Update(WhatSay, x, y);
-		}
-		else
-		{
-			WhatSay = WhatToSay::Hello_World;
-			Update(WhatSay, x, y);
-		}
-		InvalidateRect(hWnd, NULL, TRUE);
-		break;
+		MouseX = LOWORD(lParam); MouseY = HIWORD(lParam);
+		IsItHold = true;
+		return 0;
 	case WM_DESTROY:
 		if (pCbit)
 		{

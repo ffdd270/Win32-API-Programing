@@ -1,7 +1,8 @@
 #include "Graphic.h"
 #include "resource.h"
 
-const int Sayx = 50, Sayy = -30;
+int EndX; //이미지 파일의 끝점.
+int EndY;
 
 void LoadResoucePNG(UINT num, Image ** pimg)
 {
@@ -34,6 +35,17 @@ HFONT MakeFont(int Height, int fnWeight, DWORD charset, LPCTSTR fontname)
 	return CreateFont(Height, 0, 0, 0, 0, 0, 0, 0, charset, 0, 0, 0, 0, fontname);
 }
 
+
+//This Funtion Get Mouse XY
+void NowMouseXY(HDC hdc, int x, int y) //Only For Debug.
+{
+	char buf[100];
+	wsprintf(buf, "%d, %d", x, y);
+
+	MyTextOut(hdc, 500, 300, buf);
+}
+
+//This Funtion Work For Chariter Say.
 void Say(HDC hdc, int x, int y)
 {
 	const int Sayx = 50, Sayy = -30;
@@ -78,7 +90,6 @@ void Update(UINT Whochar, int x, int y)
 	Graphics G(hWndMain);
 	RECT crt;
 	Image * pImage = NULL;
-	Font f(L"나눔바른고딕", 10, 0, UnitMillimeter);
 	GetClientRect(hWndMain, &crt);
 
 	Bitmap *pBit = new Bitmap(crt.right, crt.bottom, &G);
@@ -91,9 +102,12 @@ void Update(UINT Whochar, int x, int y)
 
 	if (pImage->GetLastStatus() != Ok)
 		return;
-	//끝
+
 	memG->DrawImage(pImage, x, y, pImage->GetWidth() / 8, pImage->GetHeight() / 8);
-	
+
+	//넓이와 높이의 출력 좌표를 더해주면 끝점이겠지?
+	EndX = pImage->GetWidth() / 8 + x;
+	EndY = pImage->GetHeight() / 8 + y; 
 
 	pCbit = new CachedBitmap(pBit, &G);
 	delete pBit;
