@@ -100,15 +100,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			MovementX = LOWORD(lParam); MovementY = HIWORD(lParam);
 			if (MovementX > x && MovementY > y && MovementX < EndX && MovementY < EndY)
 			{
-				MovementX = MovementX - MouseX; 
-				MovementY = MovementY - MouseY;
+				MovementX -= MouseX; 
+				MovementY -= MouseY;
 				MidX = ((x + EndX) / 2); 
 				MidY = ((y + EndY) / 2);
 				MidX += MovementX; 
 				MidY += MovementY;
 				x = (MidX * 2) - EndX; y = (MidY * 2) - EndY;
 				Update(WhatSay, x, y);
+				//Debug.
 			}
+			MouseX = LOWORD(lParam); MouseY = HIWORD(lParam);
 		}
 		return 0;
 	case WM_LBUTTONUP:
