@@ -1,13 +1,7 @@
 #include <Windows.h>
-#include <gdiplus.h>
 #include <time.h>
-#include "resource.h"
 #include "Graphic.h"
 
-
-using namespace Gdiplus;
-
-#pragma comment(lib, "gdiplus")
 
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
@@ -51,7 +45,7 @@ int APIENTRY WinMain(HINSTANCE hinstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	hwnd = CreateWindow(lpszClass, lpszClass, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 740, 440, NULL, (HMENU)NULL, hinstance, NULL);
 	ShowWindow(hwnd, nCmdShow);
 
-	while (GetMessage(&message, NULL, 0, 0, 0))
+	while (GetMessage(&message, NULL, 0, 0))
 	{
 		TranslateMessage(&message);
 		DispatchMessage(&message);
@@ -107,9 +101,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			}
 		}
 		return 0;
-	case WM_LBUTTONUP:
-		IsItHold = false;
-		return 0;
 	case WM_CHAR:
 		switch ((TCHAR)wParam)
 		{
@@ -139,6 +130,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		default:
 			break;
 		}
+	case WM_LBUTTONUP:
+		IsItHold = false;
+		return 0;
 	case WM_LBUTTONDOWN:
 		MouseX = LOWORD(lParam); MouseY = HIWORD(lParam);
 		IsItHold = true;
