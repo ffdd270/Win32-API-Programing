@@ -3,14 +3,28 @@
 
 #include <Windows.h>
 #include <gdiplus.h>
+
 using namespace Gdiplus;
 
 #pragma comment(lib, "gdiplus")
 
+enum WhatToSay
+{
+	Hello_World, WhatTime, GoodMoring,
+};
+
+//Stading_CG Ext value
 extern HINSTANCE g_hinst;
 extern HWND hWndMain;
 extern CachedBitmap *pCbit;
-void OnPaint(HDC hdc, UINT WhoChar, int x, int y);
+extern int WhatSay;
+
+//Funtion
+
+//Stading_CG
+
+//Image
+void OnPaint(HDC hdc, int x, int y);
 void Update(UINT Whochar, int x, int y); 
 void LoadResoucePNG(UINT num, Image ** pimg);
 
