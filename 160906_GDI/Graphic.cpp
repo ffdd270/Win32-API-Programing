@@ -92,6 +92,11 @@ void Update(UINT Whochar, int x, int y)
 	Image * pImage = NULL;
 	GetClientRect(hWndMain, &crt);
 
+	if (pCbit != NULL)
+	{
+		delete pCbit;
+	}
+
 	Bitmap *pBit = new Bitmap(crt.right, crt.bottom, &G);
 	Graphics *memG = new Graphics(pBit);
 	memG->FillRectangle(&SolidBrush(Color(255, 255, 255)), 0, 0, crt.right, crt.bottom);
@@ -110,8 +115,11 @@ void Update(UINT Whochar, int x, int y)
 	EndY = pImage->GetHeight() / 8 + y; 
 
 	pCbit = new CachedBitmap(pBit, &G);
+
+	delete pImage;
 	delete pBit;
 	delete memG;
+
 	InvalidateRect(hWndMain, NULL, FALSE);
 }
 

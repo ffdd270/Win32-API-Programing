@@ -100,12 +100,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 			MovementX = LOWORD(lParam); MovementY = HIWORD(lParam);
 			if (MovementX > x && MovementY > y && MovementX < EndX && MovementY < EndY)
 			{
-				MovementX -= MouseX; 
+				//갸아아아아아아가갲ㅂ가ㅐㅈㅂ그ㅜㅐㅈㅂㄱㅈ벶ㅂ게ㅏㅐㅈㄱㅂ
+				/*MovementX -= MouseX; 
 				MovementY -= MouseY;
 				MidX = ((x + EndX) / 2); 
 				MidY = ((y + EndY) / 2);
 				MidX += MovementX; 
-				MidY += MovementY;
+				MidY += MovementY;*/
+				MidX = MovementX; MidY = MovementY;
 				x = (MidX * 2) - EndX; y = (MidY * 2) - EndY;
 				Update(WhatSay, x, y);
 				//Debug.
