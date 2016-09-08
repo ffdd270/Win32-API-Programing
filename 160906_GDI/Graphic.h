@@ -31,4 +31,6 @@ extern int EndY;
 void OnPaint(HDC hdc, int x, int y);
 void Update(UINT Whochar, int x, int y); 
 void LoadResoucePNG(UINT num, Image ** pimg);
+//DeBug
+void HowMuchPaint(HDC hdc);
 #endif

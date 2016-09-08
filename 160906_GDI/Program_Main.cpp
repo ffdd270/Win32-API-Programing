@@ -91,14 +91,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		if (IsItHold)
 		{
-			MovementX = LOWORD(lParam); MovementY = HIWORD(lParam);
-			if (MovementX > x && MovementY > y && MovementX < EndX && MovementY < EndY)
+			if (MouseX > x && MouseY > y && MouseX < EndX && MouseY < EndY)
 			{
-				MidX = MovementX; MidY = MovementY;
+				MidX = MouseX; MidY = MouseY;
 				x = (MidX * 2) - EndX; y = (MidY * 2) - EndY;
-				Update(WhatSay, x, y); //스프라이트 업데이트시.
-				//Debug.
-			}
+				Update(WhatSay, x, y);
+			}		
+
+			MouseX = LOWORD(lParam); MouseY = HIWORD(lParam);
 		}
 		return 0;
 	case WM_CHAR:

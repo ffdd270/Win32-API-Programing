@@ -85,6 +85,20 @@ void Say(HDC hdc, int x, int y)
 	DeleteObject(hFont);
 }
 
+//For Debug
+void HowMuchPaint(HDC hdc)
+{
+	char Temp[100];
+	static int PaintTry = 0;
+
+	wsprintf(Temp, "지금까지 페인트된 횟수 : %d", PaintTry);
+
+	MyTextOut(hdc, 600, 600, Temp);
+	PaintTry++;
+}
+
+
+
 void Update(UINT Whochar, int x, int y)
 {
 	Graphics G(hWndMain);
@@ -130,15 +144,16 @@ void Update(UINT Whochar, int x, int y)
 	InvalidateRect(hWndMain, NULL, FALSE);
 }
 
+
 void OnPaint(HDC hdc, int x, int y)
 {
 	Graphics G(hdc);
 
 	if (pCbit == NULL)
 	{
-		Update(WhatSay,x,y);
+		Update(WhatSay, x, y);
 	}
-
 	G.DrawCachedBitmap(pCbit, 0, 0);
+	HowMuchPaint(hdc);
 	Say(hdc,x,y);
 }
