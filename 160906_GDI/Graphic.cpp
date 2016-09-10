@@ -1,7 +1,7 @@
 #include "Graphic.h"
 #include "resource.h"
 
-int EndX; //ÀÌ¹ÌÁö ÆÄÀÏÀÇ ³¡Á¡.
+int EndX; //ì´ë¯¸ì§€ íŒŒì¼ì˜ ëì .
 int EndY;
 
 void LoadResoucePNG(UINT num, Image ** pimg)
@@ -55,7 +55,7 @@ void Say(HDC hdc, int x, int y)
 
 	GetLocalTime(&now);
 
-	hFont = MakeFont(15, 10, HANGEUL_CHARSET, TEXT("³ª´®¹Ù¸¥°íµñ")); //ÆùÆ® ¼³Á¤.
+	hFont = MakeFont(15, 10, HANGEUL_CHARSET, TEXT("ë‚˜ëˆ”ë°”ë¥¸ê³ ë”•")); //í°íŠ¸ ì„¤ì •.
 	OldFont = (HFONT)SelectObject(hdc, hFont);
 
 	switch (WhatSay)
@@ -64,17 +64,17 @@ void Say(HDC hdc, int x, int y)
 		MyTextOut(hdc, x + Sayx, y + Sayy, TEXT("Hello, World!"));
 		break;
 	case WhatTime:
-		wsprintf(nowTime,"ÇöÀç ½Ã°£Àº %d : %dÀÔ´Ï´Ù.",now.wHour,now.wMinute);
+		wsprintf(nowTime,"í˜„ì¬ ì‹œê°„ì€ %d : %dì…ë‹ˆë‹¤.",now.wHour,now.wMinute);
 		MyTextOut(hdc, x + Sayx, y + Sayy, nowTime);
 		break;
 	case GoodMoring:
 		if (now.wHour < 10)
 		{
-			MyTextOut(hdc, x + Sayx, y + Sayy, TEXT("±Â ¸ğ´×!"));
+			MyTextOut(hdc, x + Sayx, y + Sayy, TEXT("êµ¿ ëª¨ë‹!"));
 		}
 		else
 		{
-			MyTextOut(hdc, x + Sayx, y + Sayy, TEXT("¾ÆÄ§ÀÎ°¡¿ä? ÄÄÇ»ÅÍ ¾È¿¡¸¸ ÀÖ¾î¼­ Àß.."));
+			MyTextOut(hdc, x + Sayx, y + Sayy, TEXT("ì•„ì¹¨ì¸ê°€ìš”? ì»´í“¨í„° ì•ˆì—ë§Œ ìˆì–´ì„œ ì˜.."));
 		}
 		break;
 	default:
@@ -91,7 +91,7 @@ void HowMuchPaint(HDC hdc)
 	char Temp[100];
 	static int PaintTry = 0;
 
-	wsprintf(Temp, "Áö±İ±îÁö ÆäÀÎÆ®µÈ È½¼ö : %d", PaintTry);
+	wsprintf(Temp, "ì§€ê¸ˆê¹Œì§€ í˜ì¸íŠ¸ëœ íšŸìˆ˜ : %d", PaintTry);
 
 	MyTextOut(hdc, 600, 600, Temp);
 	PaintTry++;
@@ -111,26 +111,26 @@ void Update(UINT Whochar, int x, int y)
 
 	memG->FillRectangle(&SolidBrush(Color(255, 255, 255)), 0, 0, crt.right, crt.bottom);
 
-	if (pCbit != NULL) //¸Ş¸ğ¸® ´©¼öÀÇ ¿øÀÎ. °è¼Ó µô¸®Æ®¸¦  ½ÃÄÑ¾ßÇÑ´Ù.
+	if (pCbit != NULL) //ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ì˜ ì›ì¸. ê³„ì† ë”œë¦¬íŠ¸ë¥¼  ì‹œì¼œì•¼í•œë‹¤.
 	{
 		delete pCbit;
 	}
 
-	//¸®¼Ò½º ·Îµå.
+	//ë¦¬ì†ŒìŠ¤ ë¡œë“œ.
 	if (OldChar != Whochar)
 	{
 		delete pImage;
 		LoadResoucePNG(Whochar, &pImage);
 	}
 
-	//·Îµå ³¡.
+	//ë¡œë“œ ë.
 
 	if (pImage->GetLastStatus() != Ok)
 		return;
 
 	memG->DrawImage(pImage, x, y, pImage->GetWidth() / 8, pImage->GetHeight() / 8);
 
-	//³ĞÀÌ¿Í ³ôÀÌÀÇ Ãâ·Â ÁÂÇ¥¸¦ ´õÇØÁÖ¸é ³¡Á¡ÀÌ°ÚÁö?
+	//ë„“ì´ì™€ ë†’ì´ì˜ ì¶œë ¥ ì¢Œí‘œë¥¼ ë”í•´ì£¼ë©´ ëì ì´ê² ì§€?
 	EndX = pImage->GetWidth() / 8 + x;
 	EndY = pImage->GetHeight() / 8 + y; 
 
@@ -142,6 +142,7 @@ void Update(UINT Whochar, int x, int y)
 	delete memG;
 
 	InvalidateRect(hWndMain, NULL, FALSE);
+	SendMessage(hWndMain, WM_PAINT, NULL, NULL); //WM_PAINTì™€ WM_MOUSEMOVEì¤‘ ìš°ì„ ìˆœìœ„ ë” ë†’ì€ê±´ WM_MOUSEMOVE! 
 }
 
 
